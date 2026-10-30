@@ -9,54 +9,50 @@
 </head>
 <body>
 
-<header>
-    <h1>Dua Boutique & Beauty Parlour</h1>
-    <p>Beauty, Elegance & Style</p>
-</header>
+    <header>
+        <h1>DUA</h1>
+        <p>Boutique & Beauty Parlour</p>
+        <p>Mailsi, Pakistan</p>
+    </header>
 
-<nav>
-    <a href="index.html">Home</a>
-    <a href="boutique.html">Boutique</a>
-    <a href="cosmetics.html">Cosmetics</a>
-</nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="cosmetics.html">Cosmetics</a>
+        <a href="cart.html">Cart</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
 
-<main>
-    <section class="hero">
-        <h2>Cosmetics Collection</h2>
-        <p>Discover beauty and skincare products for your everyday glow.</p>
-    </section>
+    <main>
+        <section class="hero">
+            <h2>Our Cosmetics Collection</h2>
+            <p>Explore beauty and skincare products.</p>
+        </section>
 
-    <section class="categories">
-        <h2>Explore Our Cosmetics</h2>
+        <section>
+            <h2>Our Products</h2>
+            <div id="product-list" class="product-grid"></div>
+        </section>
+    </main>
 
-        <div class="category-container">
-            <div class="category-card">
-                <h3>Makeup</h3>
-                <p>Beauty products for every occasion.</p>
-            </div>
+    <footer>
+        <p>© 2026 Dua Boutique and Beauty Parlour Mailsi</p>
 
-            <div class="category-card">
-                <h3>Skincare</h3>
-                <p>Products for your daily skincare routine.</p>
-            </div>
+        <p class="developer-credit">
+            Website Designed & Developed by
+            <strong>Ahmad Hassan Khan</strong>
+            <span>Web Developer | Creative Web Solutions</span>
+        </p>
+    </footer>
 
-            <div class="category-card">
-                <h3>Beauty Essentials</h3>
-                <p>Everyday beauty and personal care items.</p>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <p>© 2026 Dua Boutique and Beauty Parlour Mailsi</p>
-
-    <p class="developer-credit">
-        Website Designed & Developed by
-        <strong>Ahmad Hassan Khan</strong>
-        <span>Web Developer | Creative Web Solutions</span>
-    </p>
-</footer>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/display-products.js"></script>
+    <script>
+        displayProducts("cosmetics");
+    </script>
 
 </body>
-</html>
+    </html>
+    
