@@ -182,4 +182,27 @@ footer {
     }
 }
 
+/* DEVELOPER CREDIT */
+
+.developer-credit {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    font-size: 12px;
+    color: #E8B7B7;
+}
+
+.developer-credit strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 15px;
+    margin: 4px 0;
+}
+
+.developer-credit span {
+    display: block;
+    color: #D8C3BC;
+    font-size: 11px;
+    }
+
   
