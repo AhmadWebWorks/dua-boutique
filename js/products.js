@@ -9,7 +9,7 @@ const products = [
         name: "Beautiful Women's Dress",
         category: "boutique",
         price: 3000,
-        image: "dress1.jpg",
+        image: "images/dress1.jpg",
         description: "Beautiful dress for everyday wear and special occasions."
     },
 
@@ -19,7 +19,7 @@ const products = [
         name: "Demo Cosmetics Product",
         category: "cosmetics",
         price: 0,
-        image: "images/product2.png",
+        image: "images/product2.jpg",
         description: "Add product details here."
     }
 
