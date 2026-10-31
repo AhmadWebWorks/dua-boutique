@@ -116,9 +116,16 @@
             </div>
 
             <div class="order-summary">
-                <h3>Order Summary</h3>
-                <p>Your cart items and total will be connected here.</p>
-            </div>
+    <h3>Order Summary</h3>
+
+    <div id="checkout-items">
+        Loading cart...
+    </div>
+
+    <p>Total Items: <strong id="checkout-count">0</strong></p>
+
+    <h3>Total Amount: Rs. <span id="checkout-total">0</span></h3>
+</div>
 
             <button type="submit" class="place-order">
                 Place Order
@@ -140,14 +147,57 @@
     </p>
 </footer>
 
-<script>
-    document.getElementById("checkout-form")
-    .addEventListener("submit", function(event) {
-        event.preventDefault();
 
-        alert("Checkout form is ready. Order submission service will be connected in the next step.");
+// LOAD CART DATA ON CHECKOUT PAGE
+
+const cartKey = "duaBoutiqueCart";
+const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+const itemsContainer = document.getElementById("checkout-items");
+const countElement = document.getElementById("checkout-count");
+const totalElement = document.getElementById("checkout-total");
+const orderButton = document.querySelector(".place-order");
+
+let totalItems = 0;
+let totalAmount = 0;
+
+itemsContainer.innerHTML = "";
+
+if (cart.length === 0) {
+    itemsContainer.textContent = "Your cart is empty.";
+    orderButton.disabled = true;
+} else {
+    cart.forEach(item => {
+        totalItems += item.quantity;
+        totalAmount += item.price * item.quantity;
+
+        const product = document.createElement("p");
+
+        product.textContent =
+            item.name + " x " + item.quantity +
+            " — Rs. " + (item.price * item.quantity);
+
+        itemsContainer.appendChild(product);
     });
-</script>
+}
+
+countElement.textContent = totalItems;
+totalElement.textContent = totalAmount;
+
+// TEMPORARY TEST ONLY — NOT A REAL ORDER SUBMISSION
+
+document.getElementById("checkout-form")
+.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    alert("Checkout test successful! Real order submission will be connected next.");
+});
+
 
 </body>
 </html>
