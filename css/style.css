@@ -314,4 +314,55 @@ footer {
     }
 }
 
+/* CART NAVIGATION BUTTONS UPGRADE */
+
+.cart-summary a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 18px;
+    margin-top: 14px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+/* CONTINUE SHOPPING */
+.cart-summary a[href="boutique.html"] {
+    background: #f4e5ec;
+    color: #71364f;
+    border: 1px solid #e5c7d5;
+}
+
+/* PROCEED TO CHECKOUT */
+.cart-summary a[href="checkout.html"] {
+    background: #71364f;
+    color: white;
+    border: 1px solid #71364f;
+    box-shadow: 0 4px 10px rgba(113, 54, 79, 0.2);
+}
+
+/* HOVER EFFECT */
+.cart-summary a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+
+/* CLICK EFFECT */
+.cart-summary a:active {
+    transform: scale(0.97);
+}
+
+/* MOBILE FRIENDLY */
+@media (max-width: 600px) {
+    .cart-summary a {
+        padding: 17px;
+        font-size: 17px;
+        border-radius: 12px;
+    }
+}
+
   
