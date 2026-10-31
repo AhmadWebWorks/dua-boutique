@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Checkout | Dua Boutique</title>
     <link rel="stylesheet" href="css/style.css">
 
@@ -47,7 +48,12 @@
             border-radius: 8px;
         }
 
+        .order-summary p {
+            margin: 12px 0;
+        }
+
         .place-order {
+            display: block;
             width: 100%;
             padding: 14px;
             margin-top: 20px;
@@ -57,6 +63,11 @@
             color: white;
             font-size: 17px;
             cursor: pointer;
+        }
+
+        .place-order:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -79,7 +90,7 @@
 
     <section class="hero">
         <h2>Checkout</h2>
-        <p>Complete your information to place an order.</p>
+        <p>Complete your information to place your order.</p>
     </section>
 
     <section class="checkout-container">
@@ -94,7 +105,10 @@
 
             <label for="customer-phone">Phone Number</label>
             <input type="tel" id="customer-phone"
-                placeholder="03XXXXXXXXX" required>
+                placeholder="03XXXXXXXXX"
+                pattern="03[0-9]{9}"
+                title="Enter a valid Pakistani mobile number, e.g. 03001234567"
+                required>
 
             <label for="customer-city">City</label>
             <input type="text" id="customer-city"
@@ -116,16 +130,21 @@
             </div>
 
             <div class="order-summary">
-    <h3>Order Summary</h3>
+                <h3>Order Summary</h3>
 
-    <div id="checkout-items">
-        Loading cart...
-    </div>
+                <div id="checkout-items">
+                    Loading cart...
+                </div>
 
-    <p>Total Items: <strong id="checkout-count">0</strong></p>
+                <p>Total Items:
+                    <strong id="checkout-count">0</strong>
+                </p>
 
-    <h3>Total Amount: Rs. <span id="checkout-total">0</span></h3>
-</div>
+                <h3>
+                    Total Amount: Rs.
+                    <span id="checkout-total">0</span>
+                </h3>
+            </div>
 
             <button type="submit" class="place-order">
                 Place Order
@@ -146,17 +165,25 @@
         <span>Web Developer | Creative Web Solutions</span>
     </p>
 </footer>
-<script>>
+
+<script>
 
 // LOAD CART DATA ON CHECKOUT PAGE
 
 const cartKey = "duaBoutiqueCart";
-const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+let cart = [];
+
+try {
+    cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+} catch (error) {
+    cart = [];
+}
 
 const itemsContainer = document.getElementById("checkout-items");
 const countElement = document.getElementById("checkout-count");
 const totalElement = document.getElementById("checkout-total");
 const orderButton = document.querySelector(".place-order");
+const checkoutForm = document.getElementById("checkout-form");
 
 let totalItems = 0;
 let totalAmount = 0;
@@ -164,30 +191,40 @@ let totalAmount = 0;
 itemsContainer.innerHTML = "";
 
 if (cart.length === 0) {
-    itemsContainer.textContent = "Your cart is empty.";
+
+    itemsContainer.textContent = "Your cart is empty. Please add products first.";
     orderButton.disabled = true;
+
 } else {
+
     cart.forEach(item => {
-        totalItems += item.quantity;
-        totalAmount += item.price * item.quantity;
+
+        const quantity = Number(item.quantity) || 0;
+        const price = Number(item.price) || 0;
+
+        totalItems += quantity;
+        totalAmount += price * quantity;
 
         const product = document.createElement("p");
 
         product.textContent =
-            item.name + " x " + item.quantity +
-            " — Rs. " + (item.price * item.quantity);
+            item.name + " x " + quantity +
+            " — Rs. " + (price * quantity);
 
         itemsContainer.appendChild(product);
+
     });
+
 }
 
 countElement.textContent = totalItems;
 totalElement.textContent = totalAmount;
 
-// TEMPORARY TEST ONLY — NOT A REAL ORDER SUBMISSION
+// TEMPORARY CHECKOUT TEST
+// REAL ORDER SUBMISSION WILL BE CONNECTED LATER
 
-document.getElementById("checkout-form")
-.addEventListener("submit", function(event) {
+checkoutForm.addEventListener("submit", function(event) {
+
     event.preventDefault();
 
     if (cart.length === 0) {
@@ -196,8 +233,10 @@ document.getElementById("checkout-form")
     }
 
     alert("Checkout test successful! Real order submission will be connected next.");
+
 });
-<script>
+
+</script>
 
 </body>
 </html>
