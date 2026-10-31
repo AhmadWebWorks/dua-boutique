@@ -167,6 +167,7 @@
 
 <script>
 
+
 // WHATSAPP ORDER SYSTEM
 
 const CART_KEY = "duaBoutiqueCart";
@@ -177,11 +178,13 @@ const ORDER_LOCK_KEY = "duaOrderSubmitting";
 const ORDER_LOCK_DURATION = 2 * 60 * 1000;
 
 let orderSubmitting = false;
+let unlockTimer = null;
 
 // Get cart safely
 function getCart() {
     try {
-        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        const cart = JSON.parse(localStorage.getItem(CART_KEY));
+        return Array.isArray(cart) ? cart : [];
     } catch (error) {
         return [];
     }
@@ -193,9 +196,15 @@ function isOrderLocked() {
         localStorage.getItem(ORDER_LOCK_KEY)
     );
 
-    if (!lockTime) return false;
+    if (!lockTime || !Number.isFinite(lockTime)) {
+        localStorage.removeItem(ORDER_LOCK_KEY);
+        return false;
+    }
 
-    if (Date.now() - lockTime >= ORDER_LOCK_DURATION) {
+    const remainingTime =
+        ORDER_LOCK_DURATION - (Date.now() - lockTime);
+
+    if (remainingTime <= 0) {
         localStorage.removeItem(ORDER_LOCK_KEY);
         return false;
     }
@@ -204,60 +213,120 @@ function isOrderLocked() {
 }
 
 // Page elements
-const itemsContainer = document.getElementById("checkout-items");
-const countElement = document.getElementById("checkout-count");
-const totalElement = document.getElementById("checkout-total");
-const orderButton = document.querySelector(".place-order");
-const checkoutForm = document.getElementById("checkout-form");
+const itemsContainer =
+    document.getElementById("checkout-items");
 
-// Restore lock after refresh
-if (isOrderLocked()) {
-    orderSubmitting = true;
-    orderButton.disabled = true;
-    orderButton.textContent = "Please Wait Before Retrying";
+const countElement =
+    document.getElementById("checkout-count");
+
+const totalElement =
+    document.getElementById("checkout-total");
+
+const orderButton =
+    document.querySelector(".place-order");
+
+const checkoutForm =
+    document.getElementById("checkout-form");
+
+// Unlock button automatically
+function unlockOrderButton() {
+
+    orderSubmitting = false;
+
+    localStorage.removeItem(ORDER_LOCK_KEY);
+
+    if (unlockTimer) {
+        clearTimeout(unlockTimer);
+        unlockTimer = null;
+    }
+
+    if (getCart().length > 0) {
+        orderButton.disabled = false;
+        orderButton.textContent =
+            "Place Order via WhatsApp";
+    }
 }
 
-// Display cart
-const cart = getCart();
+// Restore lock and schedule automatic unlock
+function restoreOrderLock() {
 
-let totalItems = 0;
-let totalAmount = 0;
+    const lockTime = Number(
+        localStorage.getItem(ORDER_LOCK_KEY)
+    );
 
-itemsContainer.innerHTML = "";
+    if (!lockTime) return;
 
-cart.forEach(item => {
-    const quantity = Number(item.quantity);
-    const price = Number(item.price);
+    const remainingTime =
+        ORDER_LOCK_DURATION - (Date.now() - lockTime);
 
-    if (
-        typeof item.name !== "string" ||
-        !Number.isFinite(quantity) ||
-        !Number.isFinite(price) ||
-        quantity <= 0 ||
-        price < 0
-    ) {
+    if (remainingTime <= 0) {
+        unlockOrderButton();
         return;
     }
 
-    totalItems += quantity;
-    totalAmount += price * quantity;
-
-    const product = document.createElement("p");
-
-    product.textContent =
-        item.name + " x " + quantity +
-        " — Rs. " + (price * quantity);
-
-    itemsContainer.appendChild(product);
-});
-
-if (totalItems === 0) {
-    itemsContainer.textContent = "Your cart is empty.";
+    orderSubmitting = true;
     orderButton.disabled = true;
+
+    orderButton.textContent =
+        "Please Wait Before Retrying";
+
+    unlockTimer = setTimeout(
+        unlockOrderButton,
+        remainingTime
+    );
 }
 
-countElement.textContent = totalItems;
-totalElement.textContent = totalAmount;
+// Display cart
+function displayCheckoutCart() {
+
+    const cart = getCart();
+
+    let totalItems = 0;
+    let totalAmount = 0;
+
+    itemsContainer.innerHTML = "";
+
+    cart.forEach(item => {
+
+        const quantity = Number(item.quantity);
+        const price = Number(item.price);
+
+        if (
+            typeof item.name !== "string" ||
+            !Number.isFinite(quantity) ||
+            !Number.isFinite(price) ||
+            quantity <= 0 ||
+            price < 0
+        ) {
+            return;
+        }
+
+        totalItems += quantity;
+        totalAmount += price * quantity;
+
+        const product = document.createElement("p");
+
+        product.textContent =
+            item.name + " x " + quantity +
+            " — Rs. " + (price * quantity);
+
+        itemsContainer.appendChild(product);
+    });
+
+    countElement.textContent = totalItems;
+    totalElement.textContent = totalAmount;
+
+    if (totalItems === 0) {
+        itemsContainer.textContent =
+            "Your cart is empty. Please add products first.";
+
+        orderButton.disabled = true;
+    }
+}
+
+// Initialize checkout
+displayCheckoutCart();
+restoreOrderLock();
 
 // PLACE ORDER THROUGH WHATSAPP
 checkoutForm.addEventListener("submit", function(event) {
@@ -280,11 +349,20 @@ checkoutForm.addEventListener("submit", function(event) {
         return;
     }
 
-    const name = document.getElementById("customer-name").value.trim();
-    const phone = document.getElementById("customer-phone").value.trim();
-    const city = document.getElementById("customer-city").value.trim();
-    const address = document.getElementById("customer-address").value.trim();
-    const notes = document.getElementById("customer-notes").value.trim();
+    const name =
+        document.getElementById("customer-name").value.trim();
+
+    const phone =
+        document.getElementById("customer-phone").value.trim();
+
+    const city =
+        document.getElementById("customer-city").value.trim();
+
+    const address =
+        document.getElementById("customer-address").value.trim();
+
+    const notes =
+        document.getElementById("customer-notes").value.trim();
 
     let orderTotal = 0;
     let orderCount = 0;
@@ -339,15 +417,16 @@ checkoutForm.addEventListener("submit", function(event) {
         "https://wa.me/" + WHATSAPP_NUMBER +
         "?text=" + encodeURIComponent(message);
 
-    // Open WhatsApp first
-    const whatsappWindow = window.open(whatsappURL, "_blank");
+    // Open WhatsApp before activating lock
+    const whatsappWindow =
+        window.open(whatsappURL, "_blank");
 
     if (!whatsappWindow) {
         alert("Please allow pop-ups to open WhatsApp.");
         return;
     }
 
-    // Activate temporary lock
+    // Activate persistent lock
     orderSubmitting = true;
 
     localStorage.setItem(
@@ -356,12 +435,26 @@ checkoutForm.addEventListener("submit", function(event) {
     );
 
     orderButton.disabled = true;
-    orderButton.textContent = "Opening WhatsApp...";
+
+    orderButton.textContent =
+        "Please Wait Before Retrying";
+
+    // Schedule automatic unlock
+    if (unlockTimer) {
+        clearTimeout(unlockTimer);
+    }
+
+    unlockTimer = setTimeout(
+        unlockOrderButton,
+        ORDER_LOCK_DURATION
+    );
 
     // CART IS NOT CLEARED
-    // OWNER CONFIRMATION IS REQUIRED BEFORE CLEARING IT
-
+    // OWNER CONFIRMATION IS REQUIRED
 });
+
+// CART REMAINS SAVED UNTIL OWNER CONFIRMS THE ORDER
+
 
 </script>
 
