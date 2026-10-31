@@ -6,11 +6,11 @@ const products = [
     // BOUTIQUE PRODUCTS
     {
         id: 1,
-        name: "Demo Clothing Product",
+        name: "Beautiful Women's Dress",
         category: "boutique",
-        price: 0,
-        image: "images/product1.jpg",
-        description: "Add product details here."
+        price: 3000,
+        image: "images/dress1.jpg",
+        description: "Beautiful dress for everyday wear and special occasions."
     },
 
     // COSMETICS PRODUCTS
@@ -19,9 +19,8 @@ const products = [
         name: "Demo Cosmetics Product",
         category: "cosmetics",
         price: 0,
-        image: "images/product2.jpg",
+        image: "images/product2.png",
         description: "Add product details here."
     }
 
 ];
-
