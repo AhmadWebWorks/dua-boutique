@@ -270,4 +270,48 @@ footer {
     background: #682747;
     }
 
+/* CART BUTTON DESIGN UPGRADE */
+
+.cart-product button {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 10px 16px;
+    margin: 6px 5px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* QUANTITY BUTTONS */
+.cart-product button:first-of-type,
+.cart-product button:nth-of-type(2) {
+    background: #ead5df;
+    color: #57283f;
+}
+
+/* REMOVE BUTTON */
+.cart-product button:last-of-type {
+    background: #8b294b;
+    color: white;
+    font-size: 15px;
+    min-width: 85px;
+}
+
+/* CLICK EFFECT */
+.cart-product button:active {
+    transform: scale(0.94);
+}
+
+/* MOBILE FRIENDLY */
+@media (max-width: 600px) {
+    .cart-product button {
+        min-width: 52px;
+        min-height: 52px;
+        font-size: 22px;
+    }
+}
+
   
