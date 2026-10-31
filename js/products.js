@@ -9,7 +9,7 @@ const products = [
         name: "Beautiful Women's Dress",
         category: "boutique",
         price: 3000,
-        image: "images/dress1.png",
+        image: "dress1.png",
         description: "Beautiful dress for everyday wear and special occasions."
     },
 
