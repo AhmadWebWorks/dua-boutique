@@ -164,11 +164,21 @@
 
 <script>
 
+
+<script>
+
 // WHATSAPP ORDER SYSTEM
 
 const CART_KEY = "duaBoutiqueCart";
 const WHATSAPP_NUMBER = "923294781014";
 
+// TEMPORARY PERSISTENT ORDER LOCK
+const ORDER_LOCK_KEY = "duaOrderSubmitting";
+const ORDER_LOCK_DURATION = 2 * 60 * 1000;
+
+let orderSubmitting = false;
+
+// Get cart safely
 function getCart() {
     try {
         return JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -177,74 +187,89 @@ function getCart() {
     }
 }
 
-const cart = getCart();
+// Check active lock
+function isOrderLocked() {
+    const lockTime = Number(
+        localStorage.getItem(ORDER_LOCK_KEY)
+    );
 
+    if (!lockTime) return false;
+
+    if (Date.now() - lockTime >= ORDER_LOCK_DURATION) {
+        localStorage.removeItem(ORDER_LOCK_KEY);
+        return false;
+    }
+
+    return true;
+}
+
+// Page elements
 const itemsContainer = document.getElementById("checkout-items");
 const countElement = document.getElementById("checkout-count");
 const totalElement = document.getElementById("checkout-total");
 const orderButton = document.querySelector(".place-order");
 const checkoutForm = document.getElementById("checkout-form");
 
+// Restore lock after refresh
+if (isOrderLocked()) {
+    orderSubmitting = true;
+    orderButton.disabled = true;
+    orderButton.textContent = "Please Wait Before Retrying";
+}
+
+// Display cart
+const cart = getCart();
+
 let totalItems = 0;
 let totalAmount = 0;
 
 itemsContainer.innerHTML = "";
 
-if (cart.length === 0) {
+cart.forEach(item => {
+    const quantity = Number(item.quantity);
+    const price = Number(item.price);
 
-    itemsContainer.textContent =
-        "Your cart is empty. Please add products first.";
-
-    orderButton.disabled = true;
-
-} else {
-
-    cart.forEach(item => {
-
-        const quantity = Number(item.quantity);
-        const price = Number(item.price);
-
-        if (
-            !Number.isFinite(quantity) ||
-            !Number.isFinite(price) ||
-            quantity <= 0 ||
-            price < 0
-        ) {
-            return;
-        }
-
-        totalItems += quantity;
-        totalAmount += price * quantity;
-
-        const product = document.createElement("p");
-
-        product.textContent =
-            item.name + " x " + quantity +
-            " — Rs. " + (price * quantity);
-
-        itemsContainer.appendChild(product);
-
-    });
-
-    if (totalItems === 0) {
-        itemsContainer.textContent = "Your cart has no valid products.";
-        orderButton.disabled = true;
+    if (
+        typeof item.name !== "string" ||
+        !Number.isFinite(quantity) ||
+        !Number.isFinite(price) ||
+        quantity <= 0 ||
+        price < 0
+    ) {
+        return;
     }
+
+    totalItems += quantity;
+    totalAmount += price * quantity;
+
+    const product = document.createElement("p");
+
+    product.textContent =
+        item.name + " x " + quantity +
+        " — Rs. " + (price * quantity);
+
+    itemsContainer.appendChild(product);
+});
+
+if (totalItems === 0) {
+    itemsContainer.textContent = "Your cart is empty.";
+    orderButton.disabled = true;
 }
 
 countElement.textContent = totalItems;
 totalElement.textContent = totalAmount;
 
-
-// PREVENT DUPLICATE WHATSAPP ORDERS
-
-let orderSubmitting = false;
-
+// PLACE ORDER THROUGH WHATSAPP
 checkoutForm.addEventListener("submit", function(event) {
 
     event.preventDefault();
 
-    if (orderSubmitting) {
+    if (orderSubmitting || isOrderLocked()) {
+        alert("Please wait before trying again.");
+        return;
+    }
+
+    if (!checkoutForm.reportValidity()) {
         return;
     }
 
@@ -265,7 +290,7 @@ checkoutForm.addEventListener("submit", function(event) {
     let orderCount = 0;
     let productDetails = "";
 
-    currentCart.forEach(item => {
+    for (const item of currentCart) {
 
         const quantity = Number(item.quantity);
         const price = Number(item.price);
@@ -277,6 +302,7 @@ checkoutForm.addEventListener("submit", function(event) {
             quantity <= 0 ||
             price < 0
         ) {
+            alert("Invalid cart product. Please check your cart.");
             return;
         }
 
@@ -287,7 +313,7 @@ checkoutForm.addEventListener("submit", function(event) {
             "\n• " + item.name +
             " x " + quantity +
             " = Rs. " + (price * quantity);
-    });
+    }
 
     if (orderCount === 0) {
         alert("Your cart has no valid products!");
@@ -313,6 +339,7 @@ checkoutForm.addEventListener("submit", function(event) {
         "https://wa.me/" + WHATSAPP_NUMBER +
         "?text=" + encodeURIComponent(message);
 
+    // Open WhatsApp first
     const whatsappWindow = window.open(whatsappURL, "_blank");
 
     if (!whatsappWindow) {
@@ -320,7 +347,14 @@ checkoutForm.addEventListener("submit", function(event) {
         return;
     }
 
+    // Activate temporary lock
     orderSubmitting = true;
+
+    localStorage.setItem(
+        ORDER_LOCK_KEY,
+        Date.now().toString()
+    );
+
     orderButton.disabled = true;
     orderButton.textContent = "Opening WhatsApp...";
 
@@ -329,8 +363,8 @@ checkoutForm.addEventListener("submit", function(event) {
 
 });
 
-
 </script>
+
 
 </body>
 </html>
