@@ -88,43 +88,6 @@ footer {
     font-size: 13px;
 }
 
-/* MOBILE RESPONSIVENESS */
-
-@media (max-width: 600px) {
-
-    header h1 {
-        font-size: 34px;
-    }
-
-    nav {
-        gap: 13px;
-    }
-
-    nav a {
-        font-size: 13px;
-    }
-
-    section h2 {
-        font-size: 23px;
-    }
-  }
-
-/* HOMEPAGE HERO */
-
-.hero {
-    background: #F5E5DF;
-    padding: 75px 20px;
-    border-radius: 12px;
-}
-
-.hero h2 {
-    font-size: 36px;
-}
-
-.hero p {
-    margin: 15px 0 25px;
-}
-
 /* BUTTONS */
 
 .btn {
@@ -140,6 +103,22 @@ footer {
 
 .btn:hover {
     background: #A66D70;
+}
+
+/* HERO */
+
+.hero {
+    background: #F5E5DF;
+    padding: 75px 20px;
+    border-radius: 12px;
+}
+
+.hero h2 {
+    font-size: 36px;
+}
+
+.hero p {
+    margin: 15px 0 25px;
 }
 
 /* CATEGORY CARDS */
@@ -170,18 +149,6 @@ footer {
     border-radius: 12px;
 }
 
-/* MOBILE */
-
-@media (max-width: 600px) {
-    .hero h2 {
-        font-size: 28px;
-    }
-
-    .category-container {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* DEVELOPER CREDIT */
 
 .developer-credit {
@@ -203,7 +170,7 @@ footer {
     display: block;
     color: #D8C3BC;
     font-size: 11px;
-    }
+}
 
 /* PRODUCT GRID */
 
@@ -268,9 +235,9 @@ footer {
 
 .product-card button:hover {
     background: #682747;
-    }
+}
 
-/* CART BUTTON DESIGN UPGRADE */
+/* CART BUTTON DESIGN */
 
 .cart-product button {
     min-width: 48px;
@@ -285,14 +252,12 @@ footer {
     transition: 0.2s ease;
 }
 
-/* QUANTITY BUTTONS */
 .cart-product button:first-of-type,
 .cart-product button:nth-of-type(2) {
     background: #ead5df;
     color: #57283f;
 }
 
-/* REMOVE BUTTON */
 .cart-product button:last-of-type {
     background: #8b294b;
     color: white;
@@ -300,21 +265,11 @@ footer {
     min-width: 85px;
 }
 
-/* CLICK EFFECT */
 .cart-product button:active {
     transform: scale(0.94);
 }
 
-/* MOBILE FRIENDLY */
-@media (max-width: 600px) {
-    .cart-product button {
-        min-width: 52px;
-        min-height: 52px;
-        font-size: 22px;
-    }
-}
-
-/* CART NAVIGATION BUTTONS UPGRADE */
+/* CART NAVIGATION BUTTONS */
 
 .cart-summary a {
     display: block;
@@ -330,14 +285,12 @@ footer {
     transition: all 0.25s ease;
 }
 
-/* CONTINUE SHOPPING */
 .cart-summary a[href="boutique.html"] {
     background: #f4e5ec;
     color: #71364f;
     border: 1px solid #e5c7d5;
 }
 
-/* PROCEED TO CHECKOUT */
 .cart-summary a[href="checkout.html"] {
     background: #71364f;
     color: white;
@@ -345,24 +298,251 @@ footer {
     box-shadow: 0 4px 10px rgba(113, 54, 79, 0.2);
 }
 
-/* HOVER EFFECT */
 .cart-summary a:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(0,0,0,0.15);
 }
 
-/* CLICK EFFECT */
 .cart-summary a:active {
     transform: scale(0.97);
 }
 
-/* MOBILE FRIENDLY */
+/* =================================
+   HOMEPAGE UPGRADE
+================================= */
+
+/* SECTION LABELS */
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #A66D70;
+    margin-bottom: 8px;
+}
+
+.section-intro {
+    max-width: 650px;
+    margin: 0 auto 25px;
+    color: #80665E;
+}
+
+/* HERO UPGRADE */
+
+.home-hero {
+    background: linear-gradient(
+        135deg,
+        #F5E5DF,
+        #F8EAF0
+    );
+    border: 1px solid #ead2df;
+}
+
+.home-hero h2 {
+    font-size: clamp(29px, 5vw, 42px);
+}
+
+.home-hero > p:not(.eyebrow) {
+    max-width: 620px;
+    margin: 15px auto 22px;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-actions .btn {
+    margin: 5px 0;
+}
+
+.btn-outline {
+    background: white;
+    color: #49332F;
+    border: 1px solid #d9b9b1;
+}
+
+.btn-outline:hover {
+    background: #fdf6f3;
+    color: #49332F;
+}
+
+/* COLLECTION CARDS */
+
+.category-card {
+    border: 1px solid #f0e3df;
+}
+
+.category-card p,
+.benefit-card p,
+.service-card p,
+.visit-card p {
+    color: #725d57;
+}
+
+.home-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+/* WHY CHOOSE DUA */
+
+.home-benefits {
+    padding: 48px 20px;
+}
+
+.benefit-grid,
+.service-grid,
+.visit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 28px;
+}
+
+.benefit-card,
+.service-card,
+.visit-card {
+    background: white;
+    border: 1px solid #f0e3df;
+    border-radius: 13px;
+    padding: 25px 18px;
+    box-shadow: 0 3px 12px rgba(73, 51, 47, 0.05);
+}
+
+.benefit-card > span,
+.service-card > span,
+.visit-card > span {
+    font-size: 32px;
+}
+
+.benefit-card h3,
+.service-card h3,
+.visit-card h3 {
+    margin: 8px 0;
+    color: #49332F;
+}
+
+/* BEAUTY PARLOUR SERVICES */
+
+.home-services {
+    background: white;
+    border-radius: 14px;
+}
+
+.service-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* LOCATION AND CONTACT */
+
+.home-visit {
+    background: #F5E5DF;
+    border-radius: 14px;
+}
+
+.visit-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.whatsapp-btn {
+    background: #276749;
+}
+
+.whatsapp-btn:hover {
+    background: #1f553c;
+}
+
+.home-contact-link {
+    margin-top: 17px;
+}
+
+.home-contact-link a {
+    color: #71364f;
+    font-weight: bold;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 760px) {
+
+    .benefit-grid,
+    .service-grid,
+    .visit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+/* MOBILE */
+
 @media (max-width: 600px) {
+
+    header h1 {
+        font-size: 34px;
+    }
+
+    nav {
+        gap: 13px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    section h2 {
+        font-size: 23px;
+    }
+
+    .hero h2 {
+        font-size: 28px;
+    }
+
+    .category-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-product button {
+        min-width: 52px;
+        min-height: 52px;
+        font-size: 22px;
+    }
+
     .cart-summary a {
         padding: 17px;
         font-size: 17px;
         border-radius: 12px;
     }
+
 }
 
-  
+/* SMALL MOBILE */
+
+@media (max-width: 520px) {
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+
+    .benefit-grid,
+    .service-grid,
+    .visit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefit-card,
+    .service-card,
+    .visit-card {
+        padding: 22px 16px;
+    }
+
+}
