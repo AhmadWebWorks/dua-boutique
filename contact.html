@@ -6,7 +6,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | Dua Boutique</title>
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .contact-section {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .contact-intro {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-intro h2 {
+            color: #71364f;
+            font-size: 30px;
+        }
+
+        .contact-intro p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: #fff8fb;
+            border: 1px solid #ead2df;
+            border-radius: 16px;
+            padding: 25px 18px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(90, 40, 65, 0.08);
+        }
+
+        .contact-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .contact-card h3 {
+            color: #71364f;
+            margin: 8px 0;
+        }
+
+        .contact-card p {
+            color: #555;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 11px 18px;
+            background: #71364f;
+            color: white;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-card a:hover {
+            background: #54263c;
+        }
+
+        .contact-note {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8eaf0;
+            border-radius: 15px;
+            text-align: center;
+            color: #71364f;
+        }
+
+        .contact-note h3 {
+            margin-top: 0;
+        }
+
+        .contact-note p {
+            line-height: 1.7;
+        }
+
+        .website-link {
+            color: #71364f;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 600px) {
+            .contact-section {
+                padding: 12px;
+            }
+
+            .contact-intro h2 {
+                font-size: 25px;
+            }
+
+            .contact-card {
+                padding: 22px 15px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
 <header>
@@ -19,36 +125,85 @@
     <a href="boutique.html">Boutique</a>
     <a href="cosmetics.html">Cosmetics</a>
     <a href="cart.html">Cart 🛒</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html">Contact Us</a>
 </nav>
 
 <main>
+
     <section class="hero">
         <h2>Contact Us</h2>
         <p>We would love to hear from you!</p>
     </section>
 
-    <section class="categories">
-        <h2>Get in Touch</h2>
+    <section class="contact-section">
 
-        <p>
-            Have a question about our clothing or cosmetics?
-            Want to know more about an order?
-        </p>
+        <div class="contact-intro">
+            <h2>Get In Touch With Us</h2>
+            <p>
+                Have a question about our products, want to place an order,
+                or need assistance? Feel free to contact us.
+                We're always happy to help!
+            </p>
+        </div>
 
-        <p>
-            We welcome your questions and feedback.
-        </p>
+        <div class="contact-grid">
 
-        <h3>Our Business</h3>
-        <p>Dua Boutique and Beauty Parlour</p>
-        <p>Mailsi, Punjab, Pakistan</p>
+            <div class="contact-card">
+                <div class="contact-icon">📱</div>
+                <h3>WhatsApp</h3>
+                <p>+92 329 4781014</p>
+                <a href="https://wa.me/923294781014"
+                   target="_blank"
+                   rel="noopener">
+                    Chat on WhatsApp
+                </a>
+            </div>
 
-        <p>
-            We serve customers in Mailsi and across Pakistan.
-        </p>
+            <div class="contact-card">
+                <div class="contact-icon">📧</div>
+                <h3>Email Address</h3>
+                <p>duan07102@gmail.com</p>
+                <a href="mailto:duan07102@gmail.com">
+                    Send an Email
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Our Location</h3>
+                <p>Mailsi, Punjab, Pakistan</p>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">🕒</div>
+                <h3>Opening Hours</h3>
+                <p>
+                    <strong>9:00 AM – 9:00 PM</strong>
+                </p>
+                <p>Daily</p>
+            </div>
+
+        </div>
+
+        <div class="contact-note">
+            <h3>How Can We Help You?</h3>
+            <p>
+                For product details, orders, availability,
+                or any other questions, contact us through WhatsApp
+                or email. We will be happy to assist you.
+            </p>
+
+            <p>
+                <strong>Visit Our Website:</strong><br>
+                <a class="website-link"
+                   href="https://ahmadwebworks.github.io/dua-boutique/">
+                    Dua Boutique & Beauty Parlour
+                </a>
+            </p>
+        </div>
+
     </section>
+
 </main>
 
 <footer>
@@ -56,7 +211,7 @@
 
     <p class="developer-credit">
         Website Designed & Developed by
-        <strong>Ahmad WebWorks</strong>
+        <strong>Ahmad Hassan Khan</strong>
         <span>Web Developer | Creative Web Solutions</span>
     </p>
 </footer>
