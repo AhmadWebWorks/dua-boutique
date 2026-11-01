@@ -1,26 +1,35 @@
 
-// DUA BOUTIQUE - PRODUCT CATALOGUE
+/*
+ * DUA BOUTIQUE
+ * PRODUCT CATALOGUE
+ *
+ * Add genuine products here when their details
+ * and images are ready.
+ *
+ * Required fields:
+ * id, name, category, price, image, description
+ */
 
 const products = [
 
-    // BOUTIQUE PRODUCTS
-    {
-        id: 1,
-        name: "Beautiful Women's Dress",
-        category: "boutique",
-        price: 3000,
-        image: "images/dress1.jpg",
-        description: "Beautiful dress for everyday wear and special occasions."
-    },
+    /*
+    Example product structure:
 
-    // COSMETICS PRODUCTS
     {
-        id: 2,
-        name: "Demo Cosmetics Product",
-        category: "cosmetics",
-        price: 0,
-        image: "images/product2.jpg",
-        description: "Add product details here."
+        id: 101,
+        name: "Product Name",
+        category: "boutique",
+        price: 1500,
+        image: "images/product.jpg",
+        description: "Product description."
     }
+
+    Categories:
+    "boutique"
+    "cosmetics"
+
+    Do not publish example products without
+    confirming their actual prices and availability.
+    */
 
 ];
